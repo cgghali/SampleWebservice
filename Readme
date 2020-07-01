@@ -1,0 +1,4 @@
+1. Build jar file  -- mvn package
+2. Build docker image -- docker build -t webservice .
+3. start mysql server - docker run --name mysql-ghali -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=root -eMYSQL_DATABASE=users_database -d mysql:latest
+4. run docker image with my sql server -- docker run -p 8082:8082 --name demo --link mysql-ghali:mysql webservice
