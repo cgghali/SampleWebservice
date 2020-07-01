@@ -1,0 +1,13 @@
+@ECHO OFF
+ECHO Building docker image
+docker build -t webservice .
+ECHO stoping Mysql server....
+docker stop mysql-ghali
+ECHO removing Mysql server container...
+docker rm mysql-ghali
+docker run --name mysql-ghali -e MYSQL_ROOT_USER=root -e MYSQL_ROOT_PASSWORD=root -eMYSQL_DATABASE=users_database -d mysql:latest
+ECHO stopping Spring app container...
+docker stop demo
+ECHO removing Spring app container...
+docker rm demo
+docker run -p 8082:8082 --name demo --link mysql-ghali:mysql webservice
